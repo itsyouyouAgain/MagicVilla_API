@@ -1,4 +1,10 @@
-﻿using Serilog;
+﻿using MagicVilla_VillaAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
+using Pomelo.EntityFrameworkCore.MySql;
+
+
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 //builder.Host.UseSerilog();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultMySQLConnection"),
+    new MySqlServerVersion(new Version(8, 2, 0)))); // 替换为你的实际MySQL服务器
+
 builder.Services.AddControllers(option =>
 {
     //option.ReturnHttpNotAcceptable = true;
