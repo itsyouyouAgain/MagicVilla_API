@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MagicVilla_VillaAPI.Models.Dto
+namespace MagicVilla_Web.Models.Dto
 {
     // work with api
 	public class VillaNumberDTO
