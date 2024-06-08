@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MagicVilla_Web.Models.Dto
 {
     // work with api
-	public class VillaNumberCreateDTO
+	public class VillaNumberDTO
     {
         [Required]
         public int VillaNo { get; set; }
@@ -13,6 +13,8 @@ namespace MagicVilla_Web.Models.Dto
         public int VillaID { get; set; }
 
         public string SpecialDetails { get; set; }
+
+        public VillaDTO Villa { get; set; }
     }
 }
 
