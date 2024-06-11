@@ -27,6 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
            .EnableSensitiveDataLogging();
 });
+builder.Services.AddResponseCaching();
 // dependency injection with interface and class 在应用程序中需要 IVillaRepository 的实例时，依赖注入容器将会提供 VillaRepository 类的实例
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -62,6 +63,11 @@ builder.Services.AddAuthentication(x =>
     });
 builder.Services.AddControllers(option =>
 {
+    option.CacheProfiles.Add("Default30",
+       new CacheProfile()
+       {
+           Duration = 30
+       });
     //option.ReturnHttpNotAcceptable = true;
 }).AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
