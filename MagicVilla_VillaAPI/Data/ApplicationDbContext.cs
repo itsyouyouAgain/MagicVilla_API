@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MagicVilla_VillaAPI.Models;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MagicVilla_VillaAPI.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         // 添加构造函数以接受 DbContextOptions
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         // DbSet properties
         public DbSet<LocalUser> LocalUsers { get; set; }
@@ -19,6 +20,7 @@ namespace MagicVilla_VillaAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Villa>().HasData(
                 new Villa
                 {

@@ -1,10 +1,12 @@
 ﻿using System.Text;
 using MagicVilla_VillaAPI;
 using MagicVilla_VillaAPI.Data;
+using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Repository;
 using MagicVilla_VillaAPI.Repository.IRepository;
 using MagicVilla_VillaAPI.Repository.IRepostiory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +29,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
            .EnableSensitiveDataLogging();
 });
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddResponseCaching();
 // dependency injection with interface and class 在应用程序中需要 IVillaRepository 的实例时，依赖注入容器将会提供 VillaRepository 类的实例
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
@@ -46,7 +50,7 @@ builder.Services.AddVersionedApiExplorer(options =>
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 
 builder.Services.AddAuthentication(x =>
-{
+{   
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
